@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class DummyCustomerService implements CustomerService {
 	
-	private Map rfidToCustomerNameMap = new HashMap();
+	private Map<String,String> rfidToCustomerNameMap = new HashMap();
 	
 	public DummyCustomerService(){
 		rfidToCustomerNameMap.put("123", "Suresh Balasubramanian");
@@ -21,9 +21,16 @@ public class DummyCustomerService implements CustomerService {
 	}
 	
 	public String getCustomerNameFromCustomerIdentity( CustomerIdentity identity ) {
-		String name = (String)rfidToCustomerNameMap.get(identity.rfid);
+		System.out.println("Getting customer name for rfid"+identity.getRfid());
+		String name = (String)rfidToCustomerNameMap.get(identity.getRfid());
+		System.out.println("Found name:"+name);
 		return name;
 		
+	}
+
+	public void addCustomer(Customer customer) {
+		System.out.println("Adding rfid:"+customer.getIdentity().getRfid()+":name:"+customer.getName());
+		rfidToCustomerNameMap.put(customer.getIdentity().getRfid(), customer.getName());
 	}
 
 }
